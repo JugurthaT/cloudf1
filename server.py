@@ -10,7 +10,7 @@ env = AppEnv()
 @app.route('/')
 def hello():
     
-    print(platform.system())
+    return platform.system()+ platform.version()
 
     
 

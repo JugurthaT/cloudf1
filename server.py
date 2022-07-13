@@ -10,8 +10,14 @@ env = AppEnv()
 @app.route('/')
 def hello():
     
-    return platform.system()+ platform.version()
-
+    #return platform.system()+ platform.version()
+    print(platform.system())
+    text_file = open("test.txt", "r") 
+    #read whole file to a string
+    data = text_file.read() 
+    #close file
+    text_file.close()
+    return data
     
 
 if __name__ == '__main__':

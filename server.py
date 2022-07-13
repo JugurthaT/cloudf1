@@ -20,6 +20,6 @@ def hello():
     return data
 @app.route('/info')
 def info():    
-   #return platform.system()+ platform.version()
+   return platform.system()+ platform.version()
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv("PORT", 5000)))

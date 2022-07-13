@@ -1,0 +1,11 @@
+---
+applications:
+- name : myapp
+  buildpacks:
+  - python_buildpack
+  random-route: true
+  path: .
+  memory: 128M
+  disk_quota: 512M
+  command: python server.py 
+  instances: 2

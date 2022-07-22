@@ -2,13 +2,17 @@ import os
 import platform
 from flask import Flask
 from cfenv import AppEnv
-
+from hdbcli import dbapi
 
 app = Flask(__name__)
 env = AppEnv()
 
+hana_service = 'hanatrial'
+hana = env.get_service(label=hana_service)
+print("********************************************")
+print(hana,flush=True)
 @app.route('/')
-def hello():
+def allo():
     
     #return platform.system()+ platform.version()
     print(platform.system())
@@ -18,6 +22,21 @@ def hello():
     #close file
     text_file.close()
     return data
+@app.route('/db')
+def  hello():
+    conn = dbapi.connect(address=hana.credentials['host'],
+                         port=int(hana.credentials['port']),
+                         user=hana.credentials['user'],
+                         password=hana.credentials['password'],
+                         encrypt='true',
+                         sslTrustStore=hana.credentials['certificate'])
+
+    cursor = conn.cursor()
+    cursor.execute("select * from DUMMY")
+    ro = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return "Current version is: " + str(ro)
 @app.route('/info')
 def info():    
    return platform.system()+ platform.version()
